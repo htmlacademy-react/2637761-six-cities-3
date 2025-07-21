@@ -1,12 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import {createRoot} from 'react-dom/client';
+import App from './components/app/app.tsx';
+import {DefaultData} from './mocks/mocks.ts';
 
-const root = ReactDOM.createRoot(
+const root = createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
   <React.StrictMode>
-    <h1>Hello, World!</h1>
+    <App data={DefaultData}/>
   </React.StrictMode>
 );
