@@ -1,6 +1,6 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import App from './components/app/app.tsx';
+import App from './components/App/App.tsx';
 import {DefaultData} from './mocks/mocks.ts';
 
 const root = createRoot(
