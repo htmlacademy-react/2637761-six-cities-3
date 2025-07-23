@@ -1,4 +1,4 @@
-import { MainPageProps } from '../pages/main-page/main-page';
+import { MainPageProps } from '../pages/MainPage/MainPage';
 import {IPlace} from '../types/types';
 
 export const DefaultData: MainPageProps = {

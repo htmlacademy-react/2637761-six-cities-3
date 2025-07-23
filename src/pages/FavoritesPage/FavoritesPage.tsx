@@ -1,9 +1,9 @@
-import Header from '../../components/header/header';
-import Footer from '../../components/footer/footer';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 import {City, IPlace, PlaceViewType} from '../../types/types';
-import {cityData} from '../../store/city-data/city-data';
-import PlaceCard from '../../components/placeCard/placeCard';
+import {cityData} from '../../store/CityData/CityData';
+import PlaceCard from '../../components/PlaceCard/PlaceCard';
 
 import {placeData} from '../../mocks/mocks';
 

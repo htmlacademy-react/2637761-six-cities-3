@@ -1,7 +1,7 @@
 import '../../styles/main.css';
-import Header from '../../components/header/header.tsx';
-import {PlaceViewType} from '../../types/types.ts';
-import PlaceCard from '../../components/placeCard/placeCard.tsx';
+import Header from '../../components/Header/Header';
+import {PlaceViewType} from '../../types/types';
+import PlaceCard from '../../components/PlaceCard/PlaceCard';
 
 import {placeData} from '../../mocks/mocks';
 

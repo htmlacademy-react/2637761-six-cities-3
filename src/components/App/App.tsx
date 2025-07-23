@@ -1,5 +1,5 @@
-import MainPage from '../../pages/main-page/main-page';
-import { MainPageProps } from '../../pages/main-page/main-page';
+import MainPage from '../../pages/MainPage/MainPage';
+import { MainPageProps } from '../../pages/MainPage/MainPage';
 
 type Props = {
   data: MainPageProps;
