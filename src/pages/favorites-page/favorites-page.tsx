@@ -1,10 +1,11 @@
-import Header from '../../components/header/header.tsx';
-import Footer from '../../components/footer/footer.tsx';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
 
-import {City, IPlace, PlaceViewType} from '../../types/types.ts';
-import {cityData} from '../../store/city-data/city-data.ts';
-import {placeData} from '../../store/offer-data/offer-data.ts';
-import PlaceCard from '../../components/offer-card/offer-card.tsx';
+import {City, IPlace, PlaceViewType} from '../../types/types';
+import {cityData} from '../../store/city-data/city-data';
+import PlaceCard from '../../components/placeCard/placeCard';
+
+import {placeData} from '../../mocks/mocks';
 
 type FavoriteCityPlaces = {
   city: City;

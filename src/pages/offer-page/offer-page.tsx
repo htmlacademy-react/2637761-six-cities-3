@@ -1,8 +1,9 @@
+import '../../styles/main.css';
 import Header from '../../components/header/header.tsx';
 import {PlaceViewType} from '../../types/types.ts';
-import {placeData} from '../../store/offer-data/offer-data.ts';
-import PlaceCard from '../../components/offer-card/offer-card.tsx';
-import '../../styles/main.css';
+import PlaceCard from '../../components/placeCard/placeCard.tsx';
+
+import {placeData} from '../../mocks/mocks';
 
 function OfferPage() {
 

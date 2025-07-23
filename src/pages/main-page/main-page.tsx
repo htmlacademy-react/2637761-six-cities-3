@@ -1,8 +1,9 @@
-import PlaceCard from '../../components/offer-card/offer-card';
-import {City, IPlace, PlaceViewType} from '../../types/types';
 import Header from '../../components/header/header';
+import {City, IPlace, PlaceViewType} from '../../types/types';
 import {cityData} from '../../store/city-data/city-data';
-import {placeData} from '../../store/offer-data/offer-data';
+import PlaceCard from '../../components/placeCard/placeCard';
+
+import {placeData} from '../../mocks/mocks';
 
 export type MainPageProps = {
   selectedCityId: number;
