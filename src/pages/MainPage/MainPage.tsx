@@ -21,7 +21,7 @@ const emptyCityOffers = (cityName: string) => (
 const existingCityOffers = (cityName: string, places: IPlace[]) => (
   <section className="cities__places places">
     <h2 className="visually-hidden">Places</h2>
-    <b className="places__found">{places.length} places to stay in {cityName}</b>
+    <span className="places__found">{places.length} places to stay in {cityName}</span>
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>

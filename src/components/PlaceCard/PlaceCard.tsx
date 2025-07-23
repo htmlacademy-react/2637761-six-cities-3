@@ -18,7 +18,7 @@ function PlaceCard({ key, viewType, place }: PlaceCardProps) {
       <div className={`${viewType === PlaceViewType.Favorite ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
+            <span className="place-card__price-value">&euro;{price}</span>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
