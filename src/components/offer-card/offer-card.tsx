@@ -1,26 +1,27 @@
-import {IOffer} from '../../types/types.ts';
+import {PlaceCardProps, PlaceViewType} from '../../types/types.ts';
+import '../../styles/main.css';
 
-function OfferCard(offer: IOffer) {
-  const { id, cityId, isPremium, isFavorite, rating, previewImage, price, type, title } = offer;
+function PlaceCard({ key, viewType, place }: PlaceCardProps) {
+  const { isPremium, isFavorite, rating, previewImage, price, type, title } = place;
 
   return (
-    <article key={`${id}_${cityId}`} className="cities__card place-card">
+    <article key={key} className={`${viewType}__card place-card`}>
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${viewType}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${viewType === PlaceViewType.Favorite ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${isFavorite ? 'lace-card__bookmark-button--active' : ''} button`} type="button">
+          <button className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -29,7 +30,7 @@ function OfferCard(offer: IOffer) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating * 20}%`}}></span>
+            <span className={`raiting-${Math.round(rating)}-star`}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -42,4 +43,4 @@ function OfferCard(offer: IOffer) {
   );
 }
 
-export default OfferCard;
+export default PlaceCard;

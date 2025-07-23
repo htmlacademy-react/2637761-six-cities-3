@@ -1,17 +1,15 @@
 import Header from '../../components/header/header.tsx';
 import Footer from '../../components/footer/footer.tsx';
 
-import {City, IOffer} from '../../types/types.ts';
+import {City, IPlace, PlaceViewType} from '../../types/types.ts';
 import {cityData} from '../../store/city-data/city-data.ts';
-import {offerData} from '../../store/offer-data/offer-data.ts';
-import FavoriteCard from '../../components/favorite-card/favorite-card.tsx';
+import {placeData} from '../../store/offer-data/offer-data.ts';
+import PlaceCard from '../../components/offer-card/offer-card.tsx';
 
-type FavoriteCityOffers = {
+type FavoriteCityPlaces = {
   city: City;
-  offers: IOffer[];
+  places: IPlace[];
 }
-
-const mapFavorites = (offers: IOffer[]) => offers.map((offer) => FavoriteCard(offer));
 
 const emptyFavorites = () => (
   <section className="favorites favorites--empty">
@@ -23,11 +21,11 @@ const emptyFavorites = () => (
   </section>
 );
 
-const existingFavorites = (favorites: FavoriteCityOffers[]) => (
+const existingFavorites = (favorites: FavoriteCityPlaces[]) => (
   <section className="favorites">
     <h1 className="favorites__title">Saved listing</h1>
     <ul className="favorites__list">
-      {favorites.map(({city, offers}) => (
+      {favorites.map(({city, places}) => (
         <li key={city.cityId} className="favorites__locations-items">
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
@@ -36,7 +34,9 @@ const existingFavorites = (favorites: FavoriteCityOffers[]) => (
               </a>
             </div>
           </div>
-          <div className="favorites__places">{mapFavorites(offers)}</div>
+          <div className="favorites__places">
+            {places.map((place) => <PlaceCard key={`${place.id}_${place.cityId}`} viewType={PlaceViewType.Favorite} place={place}></PlaceCard>)}
+          </div>
         </li>
       ))}
     </ul>
@@ -47,14 +47,16 @@ function FavoritesPage() {
 
   const userLogged = false;
 
-  const favorites: FavoriteCityOffers[] = cityData
+  const favorites: FavoriteCityPlaces[] = cityData
     .map((city) => {
-      const matchingItem = offerData.filter((offer) => offer.cityId === city.cityId && offer.isFavorite);
-      return matchingItem.length > 0 ? { city: city, offers: matchingItem } : null;
+      const matchingItem = placeData.filter((place) => place.cityId === city.cityId && place.isFavorite);
+      return matchingItem.length > 0 ? { city: city, places: matchingItem } : null;
     })
-    .filter((item): item is FavoriteCityOffers => item !== null);
+    .filter((item): item is FavoriteCityPlaces => item !== null);
 
   const favoritesEmpty = favorites.length === 0;
+
+  const renderFavorites = favoritesEmpty ? emptyFavorites() : existingFavorites(favorites);
 
   return (
     <div className="page">
@@ -62,7 +64,7 @@ function FavoritesPage() {
 
       <main className={`page__main page__main--favorites ${favoritesEmpty ? 'page__main--favorites-empty' : ''}`}>
         <div className="page__favorites-container container">
-          {favoritesEmpty ? emptyFavorites() : existingFavorites(favorites)}
+          {renderFavorites}
         </div>
       </main>
 

@@ -1,14 +1,12 @@
-import OfferCard from '../../components/offer-card/offer-card';
-import {City, IOffer} from '../../types/types';
+import PlaceCard from '../../components/offer-card/offer-card';
+import {City, IPlace, PlaceViewType} from '../../types/types';
 import Header from '../../components/header/header';
 import {cityData} from '../../store/city-data/city-data';
-import {offerData} from '../../store/offer-data/offer-data';
+import {placeData} from '../../store/offer-data/offer-data';
 
 export type MainPageProps = {
   selectedCityId: number;
 }
-
-const mapOffers = (offers: IOffer[]) => offers.map((offer) => OfferCard(offer));
 
 const emptyCityOffers = (cityName: string) => (
   <section className="cities__no-places">
@@ -19,10 +17,10 @@ const emptyCityOffers = (cityName: string) => (
   </section>
 );
 
-const existingCityOffers = (cityName: string, offers: IOffer[]) => (
+const existingCityOffers = (cityName: string, places: IPlace[]) => (
   <section className="cities__places places">
     <h2 className="visually-hidden">Places</h2>
-    <b className="places__found">{offers.length} places to stay in {cityName}</b>
+    <b className="places__found">{places.length} places to stay in {cityName}</b>
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
@@ -38,7 +36,9 @@ const existingCityOffers = (cityName: string, offers: IOffer[]) => (
         <li className="places__option" tabIndex={0}>Top rated first</li>
       </ul>
     </form>
-    <div className="cities__places-list places__list tabs__content">{mapOffers(offers)}</div>
+    <div className="cities__places-list places__list tabs__content">
+      {places.map((place) => <PlaceCard key={`${place.id}_${place.cityId}`} viewType={PlaceViewType.Cities} place={place}></PlaceCard>)}
+    </div>
   </section>
 );
 
@@ -48,9 +48,11 @@ function MainPage({ selectedCityId }: MainPageProps) {
   const userLogged = false;
 
   const selectedCity: City = cityData.find((r) => r.cityId === selectedCityId)!;
-  const cityOffers = offerData.filter((r) => r.cityId === selectedCityId);
+  const cityOffers = placeData.filter((r) => r.cityId === selectedCityId);
 
   const cityOffersEmpty = cityOffers.length === 0;
+
+  const renderCityOffers = cityOffersEmpty ? emptyCityOffers(selectedCity.cityName) : existingCityOffers(selectedCity.cityName, cityOffers);
 
   const mapCities = (city: City[]) => city.map((item) => (
     <li key={item.cityId} className="locations__item">
@@ -73,9 +75,9 @@ function MainPage({ selectedCityId }: MainPageProps) {
         </div>
         <div className="cities">
           <div className={`cities__places-container ${cityOffersEmpty ? 'cities__places-container--empty' : ''} container`}>
-            {cityOffersEmpty ? emptyCityOffers(selectedCity.cityName) : existingCityOffers(selectedCity.cityName, cityOffers)}
+            {renderCityOffers}
             <div className="cities__right-section">
-              {cityOffersEmpty ? null : <section className="cities__map map"></section>}
+              {!cityOffersEmpty && <section className="cities__map map"></section>}
             </div>
           </div>
         </div>

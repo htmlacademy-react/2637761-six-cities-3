@@ -1,6 +1,6 @@
-import {IOffer} from '../../types/types.ts';
+import {IPlace} from '../../types/types.ts';
 
-export const offerData: IOffer[] = [
+export const placeData: IPlace[] = [
   {
     id: 1,
     cityId: 4,

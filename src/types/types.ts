@@ -15,12 +15,9 @@ export interface IPlace {
   isPremium: boolean;
   previewImage: string;
   price: number;
-  type: 'Apartment' | 'Room';
+  type: 'Apartment' | 'Room' | 'House' | 'Hotel';
   title: string;
   location?: Location;
-}
-
-export interface IOffer extends IPlace {
   isFavorite: boolean;
   rating: number;
 }
@@ -28,4 +25,16 @@ export interface IOffer extends IPlace {
 export type UserData = {
   favoriteCount: number;
   userEmail: string;
+}
+
+export type PlaceCardProps = {
+  key: string;
+  viewType: PlaceViewType;
+  place: IPlace;
+}
+
+export enum PlaceViewType {
+  Favorite = 'favorites',
+  Cities = 'cities',
+  NearPlaces = 'near-places',
 }
