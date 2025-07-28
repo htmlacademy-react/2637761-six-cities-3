@@ -1,12 +1,18 @@
 import Header from '../../components/Header/Header';
 import {City, IPlace, PlaceViewType} from '../../types/types';
+import {AuthorizationStatus} from '../../const';
 import {cityData} from '../../store/CityData/CityData';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 
 import {placeData} from '../../mocks/mocks';
 
-export type MainPageProps = {
+type MainPageData = {
   selectedCityId: number;
+}
+
+export type MainPageProps = {
+  mainPageData: MainPageData;
+  authStatus: AuthorizationStatus;
 }
 
 const emptyCityOffers = (cityName: string) => (
@@ -44,10 +50,9 @@ const existingCityOffers = (cityName: string, places: IPlace[]) => (
 );
 
 
-function MainPage({ selectedCityId }: MainPageProps) {
+function MainPage({mainPageData, authStatus}: MainPageProps) {
 
-  const userLogged = false;
-
+  const { selectedCityId } = mainPageData;
   const selectedCity: City = cityData.find((r) => r.cityId === selectedCityId)!;
   const cityOffers = placeData.filter((r) => r.cityId === selectedCityId);
 
@@ -65,7 +70,7 @@ function MainPage({ selectedCityId }: MainPageProps) {
 
   return (
     <div className="page page--gray page--main">
-      <Header userLogged={userLogged}/>
+      <Header authStatus={authStatus}/>
 
       <main className={`page__main page__main--index ${cityOffersEmpty ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>

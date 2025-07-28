@@ -1,7 +1,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import App from './components/App/App.tsx';
-import {DefaultData} from './mocks/mocks.ts';
+import App from './components/App/App';
+import {DefaultData} from './mocks/mocks';
 
 const root = createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,6 +9,6 @@ const root = createRoot(
 
 root.render(
   <React.StrictMode>
-    <App data={DefaultData}/>
+    <App {...DefaultData}/>
   </React.StrictMode>
 );

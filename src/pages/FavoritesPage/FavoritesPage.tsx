@@ -6,6 +6,7 @@ import {cityData} from '../../store/CityData/CityData';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 
 import {placeData} from '../../mocks/mocks';
+import { AuthorizationStatus } from '../../const';
 
 type FavoriteCityPlaces = {
   city: City;
@@ -46,8 +47,6 @@ const existingFavorites = (favorites: FavoriteCityPlaces[]) => (
 
 function FavoritesPage() {
 
-  const userLogged = false;
-
   const favorites: FavoriteCityPlaces[] = cityData
     .map((city) => {
       const matchingItem = placeData.filter((place) => place.cityId === city.cityId && place.isFavorite);
@@ -61,7 +60,7 @@ function FavoritesPage() {
 
   return (
     <div className="page">
-      <Header userLogged={userLogged}/>
+      <Header authStatus={AuthorizationStatus.Auth}/>
 
       <main className={`page__main page__main--favorites ${favoritesEmpty ? 'page__main--favorites-empty' : ''}`}>
         <div className="page__favorites-container container">
