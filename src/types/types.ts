@@ -28,7 +28,6 @@ export type UserData = {
 }
 
 export type PlaceCardProps = {
-  key: string;
   viewType: PlaceViewType;
   place: IPlace;
 }

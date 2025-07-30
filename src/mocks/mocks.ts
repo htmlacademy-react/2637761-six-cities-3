@@ -1,8 +1,12 @@
+import { AuthorizationStatus } from '../const';
 import { MainPageProps } from '../pages/MainPage/MainPage';
 import {IPlace} from '../types/types';
 
 export const DefaultData: MainPageProps = {
-  selectedCityId: 4
+  mainPageData: {
+    selectedCityId: 4
+  },
+  authStatus: AuthorizationStatus.Auth
 };
 
 export const placeData: IPlace[] = [

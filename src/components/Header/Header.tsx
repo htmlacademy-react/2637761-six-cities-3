@@ -1,15 +1,19 @@
+import {Link} from 'react-router-dom';
 import {UserData} from '../../types/types.ts';
+import {AppRoute, AuthorizationStatus} from '../../const';
 
 type HeaderProps = {
-  userLogged: boolean;
+  authStatus: AuthorizationStatus;
   userData?: UserData;
 }
 
-function Header({ userLogged, userData }: HeaderProps) {
+function Header({ authStatus, userData }: HeaderProps) {
   let defaultUserData: UserData = {
     favoriteCount: 3,
     userEmail: 'Oliver.conner@gmail.com'
   };
+
+  const userLogged = authStatus === AuthorizationStatus.Auth;
 
   if (userLogged && userData){
     defaultUserData = userData;
@@ -22,25 +26,27 @@ function Header({ userLogged, userData }: HeaderProps) {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <a className="header__logo-link header__logo-link--active">
+            <Link className="header__logo-link header__logo-link--active" to={AppRoute.Main}>
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-            </a>
+            </Link>
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <a className="header__nav-link header__nav-link--profile" href="#">
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
-                  {userLogged ? (
-                    <>
-                      <span className="header__user-name user__name">{userEmail}</span>
-                      <span className="header__favorite-count">{favoriteCount}</span>
-                    </>
-                  ) : (
-                    <span className="header__login">Sign in</span>
+                {userLogged ? (
+                  <a className="header__nav-link header__nav-link--profile" href="#">
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                    <span className="header__user-name user__name">{userEmail}</span>
+                    <span className="header__favorite-count">{favoriteCount}</span>
+                  </a>)
+                  : (
+                    <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__login">Sign in</span>
+                    </Link>
                   )}
-                </a>
               </li>
               {userLogged &&
                 <li className="header__nav-item">

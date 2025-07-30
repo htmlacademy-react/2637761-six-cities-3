@@ -1,19 +1,23 @@
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import {PlaceCardProps, PlaceViewType} from '../../types/types.ts';
 import '../../styles/main.css';
 
-function PlaceCard({ key, viewType, place }: PlaceCardProps) {
-  const { isPremium, isFavorite, rating, previewImage, price, type, title } = place;
+function PlaceCard({ viewType, place }: PlaceCardProps) {
+  const { id, isPremium, isFavorite, rating, previewImage, price, type, title } = place;
+
+  const placeId = id.toString();
 
   return (
-    <article key={key} className={`${viewType}__card place-card`}>
+    <article className={`${viewType}__card place-card`}>
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
       <div className={`${viewType}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <Link to={AppRoute.Offer.replace(':id', placeId)}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className={`${viewType === PlaceViewType.Favorite ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -35,7 +39,7 @@ function PlaceCard({ key, viewType, place }: PlaceCardProps) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={AppRoute.Offer.replace(':id', placeId)}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
