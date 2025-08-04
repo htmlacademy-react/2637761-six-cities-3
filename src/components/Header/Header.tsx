@@ -1,25 +1,21 @@
 import {Link} from 'react-router-dom';
-import {UserData} from '../../types/types.ts';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import {getAuthStatus} from '../../mocks/mocks';
+import {User} from '../../mocks/User';
 
-type HeaderProps = {
-  authStatus: AuthorizationStatus;
-  userData?: UserData;
-}
+const Header = () => {
+  let email = '';
+  let favoriteCount = 0;
+  let avatarUrl = '';
 
-function Header({ authStatus, userData }: HeaderProps) {
-  let defaultUserData: UserData = {
-    favoriteCount: 3,
-    userEmail: 'Oliver.conner@gmail.com'
-  };
-
+  const authStatus = getAuthStatus();
   const userLogged = authStatus === AuthorizationStatus.Auth;
 
-  if (userLogged && userData){
-    defaultUserData = userData;
+  if (userLogged){
+    email = User.email;
+    favoriteCount = User.favoriteCount;
+    avatarUrl = User.avatarUrl;
   }
-
-  const { favoriteCount, userEmail } = defaultUserData;
 
   return (
     <header className="header">
@@ -36,8 +32,9 @@ function Header({ authStatus, userData }: HeaderProps) {
                 {userLogged ? (
                   <a className="header__nav-link header__nav-link--profile" href="#">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
+                      <img className="header__avatar-wrapper user__avatar" src={avatarUrl} width="54" height="54" alt="Avatar"/>
                     </div>
-                    <span className="header__user-name user__name">{userEmail}</span>
+                    <span className="header__user-name user__name">{email}</span>
                     <span className="header__favorite-count">{favoriteCount}</span>
                   </a>)
                   : (
@@ -60,6 +57,6 @@ function Header({ authStatus, userData }: HeaderProps) {
       </div>
     </header>
   );
-}
+};
 
 export default Header;

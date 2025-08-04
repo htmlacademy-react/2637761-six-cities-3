@@ -5,8 +5,7 @@ import {City, IPlace, PlaceViewType} from '../../types/types';
 import {cityData} from '../../store/CityData/CityData';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 
-import {placeData} from '../../mocks/mocks';
-import { AuthorizationStatus } from '../../const';
+import {getPlaces} from '../../mocks/Offers';
 
 type FavoriteCityPlaces = {
   city: City;
@@ -28,16 +27,16 @@ const existingFavorites = (favorites: FavoriteCityPlaces[]) => (
     <h1 className="favorites__title">Saved listing</h1>
     <ul className="favorites__list">
       {favorites.map(({city, places}) => (
-        <li key={city.cityId} className="favorites__locations-items">
+        <li key={city.name} className="favorites__locations-items">
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{city.cityName}</span>
+                <span>{city.name}</span>
               </a>
             </div>
           </div>
           <div className="favorites__places">
-            {places.map((place) => <PlaceCard key={`${place.id}_${place.cityId}`} viewType={PlaceViewType.Favorite} place={place}></PlaceCard>)}
+            {places.map((place) => <PlaceCard key={place.id} viewType={PlaceViewType.Favorite} place={place}></PlaceCard>)}
           </div>
         </li>
       ))}
@@ -45,11 +44,11 @@ const existingFavorites = (favorites: FavoriteCityPlaces[]) => (
   </section>
 );
 
-function FavoritesPage() {
+const FavoritesPage = () => {
 
   const favorites: FavoriteCityPlaces[] = cityData
     .map((city) => {
-      const matchingItem = placeData.filter((place) => place.cityId === city.cityId && place.isFavorite);
+      const matchingItem = getPlaces(city.name).filter((place) => place.isFavorite);
       return matchingItem.length > 0 ? { city: city, places: matchingItem } : null;
     })
     .filter((item): item is FavoriteCityPlaces => item !== null);
@@ -60,7 +59,7 @@ function FavoritesPage() {
 
   return (
     <div className="page">
-      <Header authStatus={AuthorizationStatus.Auth}/>
+      <Header/>
 
       <main className={`page__main page__main--favorites ${favoritesEmpty ? 'page__main--favorites-empty' : ''}`}>
         <div className="page__favorites-container container">
@@ -71,6 +70,6 @@ function FavoritesPage() {
       <Footer />
     </div>
   );
-}
+};
 
 export default FavoritesPage;

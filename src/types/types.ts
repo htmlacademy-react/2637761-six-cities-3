@@ -5,31 +5,59 @@ export type Location = {
 }
 
 export type City = {
-  cityId: number;
-  cityName: string;
+  name: string;
+  location?: Location;
 }
 
 export interface IPlace {
-  id: number;
-  cityId: number;
-  isPremium: boolean;
-  previewImage: string;
-  price: number;
-  type: 'Apartment' | 'Room' | 'House' | 'Hotel';
+  id: string;
   title: string;
-  location?: Location;
+  type: 'apartment' | 'room' | 'house' | 'hotel';
+  price: number;
+  city: City;
+  location: Location;
   isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage?: string;
+}
+
+export interface IOffer extends IPlace {
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: IHostUser;
+  images: string[];
+  maxAdults: number;
+}
+
+export interface IReview {
+  id: string;
+  date: string;
+  user: IHostUser;
+  comment: string;
   rating: number;
 }
 
-export type UserData = {
+interface IUser {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+}
+
+export interface IHostUser extends IUser {
+}
+
+export interface ISiteUser extends IUser {
+
+  email: string;
   favoriteCount: number;
-  userEmail: string;
 }
 
 export type PlaceCardProps = {
   viewType: PlaceViewType;
   place: IPlace;
+  onHover?: (place?: IPlace | undefined) => void;
 }
 
 export enum PlaceViewType {
