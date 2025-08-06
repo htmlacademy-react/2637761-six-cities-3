@@ -27,7 +27,7 @@ const existingFavorites = (favorites: FavoriteCityPlaces[]) => (
     <h1 className="favorites__title">Saved listing</h1>
     <ul className="favorites__list">
       {favorites.map(({city, places}) => (
-        <li key={city.id} className="favorites__locations-items">
+        <li key={`${city.id}-${city.name}`} className="favorites__locations-items">
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">

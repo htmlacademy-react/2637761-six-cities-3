@@ -80,7 +80,7 @@ const MainPage = ({mainPageData}: MainPageProps) => {
   };
 
   const mapCities = (city: City[]) => city.map((item) => (
-    <li key={item.id} className="locations__item">
+    <li key={`${item.id}-${item.name}`} className="locations__item">
       <a className={`locations__item-link tabs__item ${(item.name === currentCity ? 'tabs__item--active' : '')}`} href="#">
         <span onClick={handleCityClick}>{item.name}</span>
       </a>
