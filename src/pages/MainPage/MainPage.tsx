@@ -80,7 +80,7 @@ const MainPage = ({mainPageData}: MainPageProps) => {
   };
 
   const mapCities = (city: City[]) => city.map((item) => (
-    <li key={item.name} className="locations__item">
+    <li key={item.id} className="locations__item">
       <a className={`locations__item-link tabs__item ${(item.name === currentCity ? 'tabs__item--active' : '')}`} href="#">
         <span onClick={handleCityClick}>{item.name}</span>
       </a>
@@ -102,7 +102,7 @@ const MainPage = ({mainPageData}: MainPageProps) => {
           <div className={`cities__places-container ${cityOffersEmpty ? 'cities__places-container--empty' : ''} container`}>
             {renderCityOffers}
             <div className="cities__right-section">
-              {!cityOffersEmpty && <section className="cities__map map">{activeCard?.id}</section>}
+              {!cityOffersEmpty && <section className="cities__map map">{activeCard?.id ?? 'unknown'}</section>}
             </div>
           </div>
         </div>

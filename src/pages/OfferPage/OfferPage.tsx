@@ -34,7 +34,7 @@ const OfferPage = () => {
               <div className="offer__gallery">
                 {images.map((url) => (
                   <div key={url} className="offer__image-wrapper">
-                    <img className="offer__image" src={url} alt="Photo studio"/>
+                    <img className="offer__image" src={url} alt="Фото отеля"/>
                   </div>
                 ))}
               </div>
@@ -92,7 +92,7 @@ const OfferPage = () => {
                   <h2 className="offer__host-title">Meet the host</h2>
                   <div className="offer__host-user user">
                     <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                      <img className="offer__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar"/>
+                      <img className="offer__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Аватар владельца"/>
                     </div>
                     <span className="offer__user-name">
                       {host.name}

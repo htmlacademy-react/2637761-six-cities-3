@@ -23,7 +23,7 @@ const Header = () => {
         <div className="header__wrapper">
           <div className="header__left">
             <Link className="header__logo-link header__logo-link--active" to={AppRoute.Main}>
-              <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
+              <img className="header__logo" src="img/logo.svg" alt="Логотип сайта 6 cities" width="81" height="41"/>
             </Link>
           </div>
           <nav className="header__nav">
@@ -32,7 +32,7 @@ const Header = () => {
                 {userLogged ? (
                   <a className="header__nav-link header__nav-link--profile" href="#">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
-                      <img className="header__avatar-wrapper user__avatar" src={avatarUrl} width="54" height="54" alt="Avatar"/>
+                      <img className="header__avatar-wrapper user__avatar" src={avatarUrl} alt="Аватар пользователя" width="54" height="54"/>
                     </div>
                     <span className="header__user-name user__name">{email}</span>
                     <span className="header__favorite-count">{favoriteCount}</span>

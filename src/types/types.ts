@@ -5,6 +5,7 @@ export type Location = {
 }
 
 export type City = {
+  id: number;
   name: string;
   location?: Location;
 }

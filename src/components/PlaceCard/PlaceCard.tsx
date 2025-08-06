@@ -28,7 +28,7 @@ const PlaceCard = ({ viewType, place, onHover }: PlaceCardProps) => {
         </div>}
       <div className={`${viewType}__image-wrapper place-card__image-wrapper`}>
         <Link to={linkRoute}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Фото отеля"/>
         </Link>
       </div>
       <div className={`${viewType === PlaceViewType.Favorite ? 'favorites__card-info' : ''} place-card__info`}>
