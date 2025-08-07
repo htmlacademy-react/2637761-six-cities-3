@@ -3,20 +3,32 @@ import {AppRoute} from '../../const';
 import {PlaceCardProps, PlaceViewType} from '../../types/types.ts';
 import '../../styles/main.css';
 
-function PlaceCard({ viewType, place }: PlaceCardProps) {
+const PlaceCard = ({ viewType, place, onHover }: PlaceCardProps) => {
   const { id, isPremium, isFavorite, rating, previewImage, price, type, title } = place;
 
-  const placeId = id.toString();
+  const linkRoute = AppRoute.Offer.replace(':id', id.toString());
+
+  const handleMouseEnter = () => {
+    if (onHover) {
+      onHover(place);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (onHover) {
+      onHover();
+    }
+  };
 
   return (
-    <article className={`${viewType}__card place-card`}>
+    <article className={`${viewType}__card place-card`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
       <div className={`${viewType}__image-wrapper place-card__image-wrapper`}>
-        <Link to={AppRoute.Offer.replace(':id', placeId)}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+        <Link to={linkRoute}>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Фото отеля"/>
         </Link>
       </div>
       <div className={`${viewType === PlaceViewType.Favorite ? 'favorites__card-info' : ''} place-card__info`}>
@@ -39,12 +51,12 @@ function PlaceCard({ viewType, place }: PlaceCardProps) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Offer.replace(':id', placeId)}>{title}</Link>
+          <Link to={linkRoute}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
-}
+};
 
 export default PlaceCard;

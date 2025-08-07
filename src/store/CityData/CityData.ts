@@ -2,27 +2,27 @@ import {City} from '../../types/types.ts';
 
 export const cityData: City[] = [
   {
-    cityId: 1,
-    cityName:'Paris'
+    id: 1,
+    name:'Paris'
   },
   {
-    cityId: 2,
-    cityName: 'Cologne'
+    id: 2,
+    name: 'Cologne'
   },
   {
-    cityId: 3,
-    cityName: 'Brussels'
+    id: 3,
+    name: 'Brussels'
   },
   {
-    cityId: 4,
-    cityName: 'Amsterdam'
+    id: 4,
+    name: 'Amsterdam'
   },
   {
-    cityId: 5,
-    cityName: 'Hamburg'
+    id: 5,
+    name: 'Hamburg'
   },
   {
-    cityId: 6,
-    cityName: 'Dusseldorf'
+    id: 6,
+    name: 'Dusseldorf'
   }
 ];
