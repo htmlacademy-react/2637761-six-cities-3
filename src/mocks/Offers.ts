@@ -854,6 +854,14 @@ const Offers: IPlace[] = [
   }
 ];
 
+export const getPlaceById = (offerId: string): IPlace | undefined => {
+  if (!offerId){
+    return undefined;
+  }
+
+  return Offers.find((r) => r.id === offerId);
+};
+
 export const getPlaces = (city: string): IPlace[] => {
   if (!city){
     return [];
@@ -862,11 +870,12 @@ export const getPlaces = (city: string): IPlace[] => {
   return [...Offers.filter((r) => r.city.name === city)];
 };
 
-
 export const getNearPlaces = (offerId: string): IPlace[] => {
   if (!offerId){
     return [];
   }
 
-  return [...Offers.slice(0, 3)];
+  const currentOffer = getPlaceById(offerId);
+
+  return [...Offers.filter((r) => r.city.name === currentOffer?.city.name).slice(0, 3)];
 };
