@@ -1,11 +1,12 @@
+import {useParams} from 'react-router-dom';
+import classNames from 'classnames';
+
 import '../../styles/main.css';
 import Header from '../../components/Header/Header';
 import {PlaceViewType} from '../../types/types';
 import UserReviews from '../../components/UserReviews/UserReviews';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
-
-import {useParams} from 'react-router-dom';
 
 import {getNearPlaces} from '../../mocks/Offers';
 import {getOfferDescription} from '../../mocks/OfferDescription';
@@ -22,6 +23,14 @@ const OfferPage = () => {
   const nearPlaces = getNearPlaces(placeId);
 
   const { id, images, isPremium, title, isFavorite, rating, price, type, bedrooms, maxAdults, goods, host, description } = currentOffer!;
+
+  const bookmarkClass = classNames(
+    'button',
+    'offer__bookmark-button',
+    {
+      'offer__bookmark-button--active': isFavorite
+    }
+  );
 
   return (
     currentOffer ?
@@ -49,7 +58,7 @@ const OfferPage = () => {
                   <h1 className="offer__name">
                     {title}
                   </h1>
-                  <button className={`offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : ''} button`} type="button">
+                  <button className={bookmarkClass} type="button">
                     <svg className="offer__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>

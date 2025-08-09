@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
@@ -57,11 +58,19 @@ const FavoritesPage = () => {
 
   const renderFavorites = favoritesEmpty ? emptyFavorites() : existingFavorites(favorites);
 
+  const favoritesClass = classNames(
+    'page__main',
+    'page__main--favorites',
+    {
+      'page__main--favorites-empty': favoritesEmpty
+    }
+  );
+
   return (
     <div className="page">
       <Header/>
 
-      <main className={`page__main page__main--favorites ${favoritesEmpty ? 'page__main--favorites-empty' : ''}`}>
+      <main className={favoritesClass}>
         <div className="page__favorites-container container">
           {renderFavorites}
         </div>
