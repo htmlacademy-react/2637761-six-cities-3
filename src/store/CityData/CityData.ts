@@ -58,3 +58,4 @@ export const cityData: City[] = [
 ];
 
 export const getCityByName = (city: string): City | undefined => cityData.find((r) => r.name === city);
+export const getDefaultCity = (): City=> cityData[0];

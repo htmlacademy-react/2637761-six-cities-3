@@ -3,7 +3,7 @@ import { type MouseEvent } from 'react';
 import classNames from 'classnames';
 import Header from '../../components/Header/Header';
 import {City, IPlace, PlaceViewType, MapViewType} from '../../types/types';
-import {cityData, getCityByName} from '../../store/CityData/CityData';
+import {cityData, getCityByName, getDefaultCity} from '../../store/CityData/CityData';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import PlaceMap from '../../components/PlaceMap/PlaceMap';
 
@@ -33,7 +33,7 @@ const MainPage = ({mainPageData}: MainPageProps) => {
 
   const [isFiltersHovered, setIsFiltersHovered] = useState(false);
 
-  const [city, setCity] = useState(getCityByName(currentCity)!);
+  const [city, setCity] = useState(getCityByName(currentCity) ?? getDefaultCity());
   const [cityPlaces, setCityPlaces] = useState(getPlaces(currentCity));
 
 
@@ -93,7 +93,7 @@ const MainPage = ({mainPageData}: MainPageProps) => {
   };
 
   useEffect(() => {
-    setCity(getCityByName(currentCity)!);
+    setCity(getCityByName(currentCity) ?? getDefaultCity());
     setCityPlaces(getPlaces(currentCity));
   }, [currentCity]);
 
