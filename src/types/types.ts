@@ -7,7 +7,7 @@ export type Location = {
 export type City = {
   id?: number;
   name: string;
-  location?: Location;
+  location: Location;
 }
 
 export interface IPlace {
@@ -65,4 +65,16 @@ export enum PlaceViewType {
   Favorite = 'favorites',
   Cities = 'cities',
   NearPlaces = 'near-places',
+}
+
+export type MapProps = {
+  viewType: MapViewType;
+  city: City;
+  places: IPlace[];
+  selectedPlace: string;
+}
+
+export enum MapViewType {
+  Offer = 'offer',
+  Cities = 'cities',
 }
