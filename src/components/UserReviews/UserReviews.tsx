@@ -1,12 +1,11 @@
-import { Fragment } from 'react';
-import { useState, useEffect } from 'react';
-import { type ChangeEvent } from 'react';
+import { useState, useEffect, Fragment } from 'react';
+import { type ChangeEvent, type FormEvent } from 'react';
 import {AuthorizationStatus} from '../../const';
-import {getAuthStatus} from '../../mocks/mocks';
+import { IReview } from '../../types/types';
 
+import {getAuthStatus} from '../../mocks/mocks';
 import {User} from '../../mocks/User';
 import {getOfferReviews} from '../../mocks/Reviews';
-import { IReview } from '../../types/types';
 
 type UserReviewsProps = {
   offerId: string;
@@ -89,7 +88,7 @@ const UserReviews = ({ offerId }: UserReviewsProps) => {
     setNewReview({...newReview, comment: value});
   };
 
-  const handleClickSubmit = (e: React.FormEvent) => {
+  const handleClickSubmit = (e: FormEvent) => {
     e.preventDefault();
     const date = (new Date()).toString();
     const review = {...newReview, id: date, date: date };
@@ -98,16 +97,37 @@ const UserReviews = ({ offerId }: UserReviewsProps) => {
     setNewReview(getDefaultReview());
   };
 
-  const mapRatingStars = () => [1, 2, 3, 4, 5].reverse().map((rating) => (
-    <Fragment key={rating}>
-      <input className="form__rating-input visually-hidden" name="rating" value={rating} id={`${rating}-stars`} type="radio" onChange={handleRatingChange} checked={newReview.rating === rating}/>
-      <label htmlFor={`${rating}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
-        <svg className="form__star-image" width="37" height="33">
-          <use xlinkHref="#icon-star"></use>
-        </svg>
-      </label>
-    </Fragment>
-  ));
+  const mapRatingStars = () => [1, 2, 3, 4, 5].reverse().map((rating) => {
+    let title = '';
+    switch (rating) {
+      case 1:
+        title = 'terribly';
+        break;
+      case 2:
+        title = 'badly';
+        break;
+      case 3:
+        title = 'not bad';
+        break;
+      case 4:
+        title = 'good';
+        break;
+      case 5:
+        title = 'perfect';
+        break;
+    }
+
+    return (
+      <Fragment key={rating}>
+        <input className="form__rating-input visually-hidden" name="rating" value={rating} id={`${rating}-stars`} type="radio" onChange={handleRatingChange} checked={newReview.rating === rating}/>
+        <label htmlFor={`${rating}-stars`} className="reviews__rating-label form__rating-label" title={title}>
+          <svg className="form__star-image" width="37" height="33">
+            <use xlinkHref="#icon-star"></use>
+          </svg>
+        </label>
+      </Fragment>
+    );
+  });
 
   return (
     <section className="offer__reviews reviews">
