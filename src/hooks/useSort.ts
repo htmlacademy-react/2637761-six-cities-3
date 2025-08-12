@@ -1,0 +1,19 @@
+import {IPlace} from '../types/types';
+import { useAppSelector } from '../hooks';
+import { selectSortType } from '../store/selectors';
+
+function useSort(places: IPlace[]): IPlace[] {
+  const sortType = useAppSelector(selectSortType);
+  switch (sortType) {
+    case 'Price: low to high':
+      return [...places].sort((a, b) => a.price - b.price);
+    case 'Price: high to low':
+      return [...places].sort((a, b) => a.price - b.price).reverse();
+    case 'Top rated first':
+      return [...places].sort((a, b) => a.rating - b.rating).reverse();
+    default:
+      return [...places];
+  }
+}
+
+export default useSort;
