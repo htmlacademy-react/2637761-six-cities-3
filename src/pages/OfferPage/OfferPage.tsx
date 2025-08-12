@@ -32,7 +32,7 @@ const OfferPage = () => {
 
   const nearPlaces = getNearPlaces(id);
 
-  const handlePlaceCardHover = (place?: IPlace | undefined) => {
+  const handlePlaceCardHover = (place?: IPlace) => {
     setActiveCard(place);
   };
 

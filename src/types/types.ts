@@ -58,7 +58,7 @@ export interface ISiteUser extends IUser {
 export type PlaceCardProps = {
   viewType: PlaceViewType;
   place: IPlace;
-  onHover?: (place?: IPlace | undefined) => void;
+  onHover?: (place?: IPlace) => void;
 }
 
 export enum PlaceViewType {

@@ -3,7 +3,9 @@ import { type ChangeEvent, type FormEvent } from 'react';
 import {AuthorizationStatus} from '../../const';
 import { IReview } from '../../types/types';
 
-import {getAuthStatus} from '../../mocks/mocks';
+import { useAppSelector } from '../../hooks';
+import { selectAuthStatus } from '../../store/selectors';
+
 import {User} from '../../mocks/User';
 import {getOfferReviews} from '../../mocks/Reviews';
 
@@ -56,7 +58,7 @@ const Review = ({ review }: ReviewsProps) => {
 
 const UserReviews = ({ offerId }: UserReviewsProps) => {
 
-  const authStatus = getAuthStatus();
+  const authStatus = useAppSelector(selectAuthStatus);
   const userLogged = authStatus === AuthorizationStatus.Auth;
 
   const [reviews, setReviews] = useState<IReview[]>(getOfferReviews(offerId));
@@ -144,7 +146,7 @@ const UserReviews = ({ offerId }: UserReviewsProps) => {
           <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleCommentChange} value={newReview.comment}></textarea>
           <div className="reviews__button-wrapper">
             <p className="reviews__help">
-              To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+              To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <span className="reviews__text-amount">50 characters</span>.
             </p>
             <button className="reviews__submit form__submit button" type="submit" disabled={!isValidReview} onClick={handleClickSubmit}>Submit</button>
           </div>

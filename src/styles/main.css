@@ -4,3 +4,11 @@
 .raiting-3-star { width: 60% !important; }
 .raiting-4-star { width: 80% !important; }
 .raiting-5-star { width: 100% !important; }
+
+.cities__no-places .cities__status {
+  font-weight: 600;
+}
+
+.reviews__help .reviews__text-amount {
+  font-weight: 500;
+}

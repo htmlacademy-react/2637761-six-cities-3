@@ -1,14 +1,16 @@
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {getAuthStatus} from '../../mocks/mocks';
 import {User} from '../../mocks/User';
+
+import { useAppSelector } from '../../hooks';
+import { selectAuthStatus } from '../../store/selectors';
 
 const Header = () => {
   let email = '';
   let favoriteCount = 0;
   let avatarUrl = '';
 
-  const authStatus = getAuthStatus();
+  const authStatus = useAppSelector(selectAuthStatus);
   const userLogged = authStatus === AuthorizationStatus.Auth;
 
   if (userLogged){
