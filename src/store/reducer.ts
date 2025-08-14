@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity } from '../store/actions';
+import { setCity, setSortType } from '../store/actions';
 
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus, SortType } from '../const';
 import {City, IPlace} from '../types/types';
 import {cityData, getCityByName, getDefaultCity} from '../store/CityData/CityData';
 
@@ -13,6 +13,7 @@ type AppState = {
     city: City;
     cityPlaces: IPlace[];
     cityPlacesCount: number;
+    sortType: SortType;
 }
 
 const getCity = (cityName: string) => getCityByName(cityName) ?? getDefaultCity();
@@ -28,7 +29,8 @@ const initialState: AppState = {
   cities: cityData,
   city: defaultCity,
   cityPlaces: defaultCityPlaces,
-  cityPlacesCount: defaultCityPlacesCount
+  cityPlacesCount: defaultCityPlacesCount,
+  sortType: 'Popular'
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -37,6 +39,9 @@ const reducer = createReducer(initialState, (builder) => {
       state.city = getCity(action.payload);
       state.cityPlaces = getPlaces(state.city.name);
       state.cityPlacesCount = state.cityPlaces.length;
+    })
+    .addCase(setSortType, (state, action) => {
+      state.sortType = action.payload;
     });
 });
 
