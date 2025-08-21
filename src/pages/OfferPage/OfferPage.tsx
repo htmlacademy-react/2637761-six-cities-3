@@ -1,17 +1,21 @@
 import {useParams} from 'react-router-dom';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import classNames from 'classnames';
 
 import '../../styles/main.css';
 import Header from '../../components/Header/Header';
-import {PlaceViewType, IPlace, MapViewType} from '../../types/types';
+import {MapViewType} from '../../types/types';
+import { IPlace, PlaceViewType } from '../../types/place';
 import UserReviews from '../../components/UserReviews/UserReviews';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import PlaceMap from '../../components/PlaceMap/PlaceMap';
+import Loader from '../../components/Loader/Loader';
 
-import {getNearPlaces} from '../../mocks/Offers';
-import {getOfferDescription} from '../../mocks/OfferDescription';
+import { store } from '../../store';
+import { fetchOfferViewAction } from '../../store/apiActions';
+import { useAppSelector } from '../../hooks';
+import { getDataIsLoading, getOffer } from '../../store/offers/selectors';
 
 type OfferRouteParams = {
   id: string;
@@ -20,17 +24,31 @@ type OfferRouteParams = {
 const OfferPage = () => {
   const [activeCard, setActiveCard] = useState<IPlace>();
 
+  const dataIsLoading = useAppSelector(getDataIsLoading);
+  const {offer: currentOffer, nearPlaces } = useAppSelector(getOffer);
+
   const urlParams = useParams<OfferRouteParams>();
   const placeId = urlParams.id ?? '';
 
-  const currentOffer = getOfferDescription(placeId);
+  useEffect(() => {
+    const fetchOfferById = async () => {
+      await store.dispatch(fetchOfferViewAction(placeId));
+    };
+    fetchOfferById();
+  }, [placeId]);
+
+  if (dataIsLoading) {
+    return (
+      <Loader />
+    );
+  }
+
   if (!currentOffer) {
     return <NotFoundPage />;
   }
 
-  const { id, images, isPremium, title, isFavorite, rating, price, type, bedrooms, maxAdults, goods, host, description, city } = currentOffer;
+  const { images, isPremium, title, isFavorite, rating, price, type, bedrooms, maxAdults, goods, host, description, city } = currentOffer;
 
-  const nearPlaces = getNearPlaces(id);
 
   const handlePlaceCardHover = (place?: IPlace) => {
     setActiveCard(place);
@@ -130,7 +148,7 @@ const OfferPage = () => {
                   </p>
                 </div>
               </div>
-              <UserReviews offerId={id}></UserReviews>
+              <UserReviews></UserReviews>
             </div>
           </div>
           <PlaceMap viewType={MapViewType.Offer} city={city} places={nearPlaces} selectedPlace={activeCard?.id ?? 'unknown'}/>

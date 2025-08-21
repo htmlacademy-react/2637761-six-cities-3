@@ -4,15 +4,15 @@ import classNames from 'classnames';
 
 import { SORT_TYPES, isSortType } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectSortType } from '../../store/selectors';
-import { setSortType } from '../../store/actions';
+import { getSortType } from '../../store/offers/selectors';
+import { setSortType } from '../../store/offers/offers';
 
 const PlaceSorting = () => {
 
   const dispatch = useAppDispatch();
 
   const [isFiltersHovered, setIsFiltersHovered] = useState(false);
-  const sortType = useAppSelector(selectSortType);
+  const sortType = useAppSelector(getSortType);
 
   const handleSortTypeClick = (event: MouseEvent<HTMLElement>) => {
     const element = event.target as HTMLElement;

@@ -4,14 +4,11 @@ import {AuthorizationStatus} from '../../const';
 import { IReview } from '../../types/types';
 
 import { useAppSelector } from '../../hooks';
-import { selectAuthStatus } from '../../store/selectors';
+import { getAuthStatus } from '../../store/user/selectors';
+import { getOffer } from '../../store/offers/selectors';
 
 import {User} from '../../mocks/User';
-import {getOfferReviews} from '../../mocks/Reviews';
 
-type UserReviewsProps = {
-  offerId: string;
-}
 
 type ReviewsProps = {
   review: IReview;
@@ -56,12 +53,12 @@ const Review = ({ review }: ReviewsProps) => {
   );
 };
 
-const UserReviews = ({ offerId }: UserReviewsProps) => {
+const UserReviews = () => {
 
-  const authStatus = useAppSelector(selectAuthStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   const userLogged = authStatus === AuthorizationStatus.Auth;
 
-  const [reviews, setReviews] = useState<IReview[]>(getOfferReviews(offerId));
+  const { reviews } = useAppSelector(getOffer);
 
   const [newReview, setNewReview] = useState<IReview>(getDefaultReview());
   const [isValidReview, setIsValidReview] = useState<boolean>(false);
@@ -92,10 +89,10 @@ const UserReviews = ({ offerId }: UserReviewsProps) => {
 
   const handleClickSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const date = (new Date()).toString();
-    const review = {...newReview, id: date, date: date };
+    /*const date = (new Date()).toString();
+    const review = {...newReview, id: date, date: date };*/
 
-    setReviews([...reviews, review]);
+    //setReviews([...reviews, review]);
     setNewReview(getDefaultReview());
   };
 

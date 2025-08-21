@@ -1,19 +1,28 @@
 import { useState } from 'react';
-import {IPlace, PlaceViewType, MapViewType} from '../../types/types';
+import {MapViewType} from '../../types/types';
+import {IPlace, PlaceViewType} from '../../types/place';
 import PlaceSorting from '../../components/PlaceSorting/PlaceSorting';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
 import PlaceMap from '../../components/PlaceMap/PlaceMap';
+import Loader from '../../components/Loader/Loader';
 
 import { useAppSelector } from '../../hooks';
 import useSort from '../../hooks/useSort';
-import { selectCity, selectCityPlaces } from '../../store/selectors';
+import { getDataIsLoading, getCity, getCityPlaces } from '../../store/offers/selectors';
 
 
 const CityPlaces = () => {
-  const city = useAppSelector(selectCity);
-  const cityPlaces = useSort(useAppSelector(selectCityPlaces));
+  const dataIsLoading = useAppSelector(getDataIsLoading);
+  const city = useAppSelector(getCity);
+  const cityPlaces = useSort(useAppSelector(getCityPlaces));
 
   const [activeCard, setActiveCard] = useState<IPlace>();
+
+  if (dataIsLoading){
+    return (
+      <Loader />
+    );
+  }
 
   if (cityPlaces.length === 0) {
     return (

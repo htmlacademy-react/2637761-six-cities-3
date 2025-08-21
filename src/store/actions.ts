@@ -1,7 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import { SortType } from '../const';
+import { AppRoute } from '../const';
 
-const setCity = createAction<string>('setCity');
-const setSortType = createAction<SortType>('setSortType');
+const redirectToRoute = createAction<AppRoute>('redirectToRoute');
 
-export { setCity, setSortType };
+export { redirectToRoute };

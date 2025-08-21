@@ -1,9 +1,9 @@
-import {IPlace} from '../types/types';
+import {IPlace} from '../types/place';
 import { useAppSelector } from '../hooks';
-import { selectSortType } from '../store/selectors';
+import { getSortType } from '../store/offers/selectors';
 
 function useSort(places: IPlace[]): IPlace[] {
-  const sortType = useAppSelector(selectSortType);
+  const sortType = useAppSelector(getSortType);
   switch (sortType) {
     case 'Price: low to high':
       return [...places].sort((a, b) => a.price - b.price);

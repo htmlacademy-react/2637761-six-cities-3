@@ -11,6 +11,14 @@ export enum AppRoute {
   Main = '/',
 }
 
+export enum APIRoute {
+  Offers = '/offers',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout'
+}
+
 export const SORT_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'] as const;
 export type SortType = typeof SORT_TYPES[number];
 
