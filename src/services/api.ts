@@ -2,6 +2,7 @@ import axios, {AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestCon
 import {StatusCodes} from 'http-status-codes';
 import {toast} from 'react-toastify';
 import {getToken} from './token';
+import { CONFIG } from '../config/appConfig';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -15,14 +16,19 @@ type ErrorData = {
 }
 
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
-
-const BASE_URL = 'https://15.design.htmlacademy.pro/six-cities';
-const REQUEST_TIMEOUT = 5000;
+const isApiError = (error: unknown): error is ErrorData => (
+  typeof error === 'object' &&
+    error !== null &&
+    'errorType' in error &&
+    'message' in error &&
+    typeof (error as ErrorData).errorType === 'string' &&
+    typeof (error as ErrorData).message === 'string'
+);
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
-    baseURL: BASE_URL,
-    timeout: REQUEST_TIMEOUT,
+    baseURL: CONFIG.api.baseUrl,
+    timeout: CONFIG.api.timeout,
   });
 
   api.interceptors.request.use(
@@ -39,11 +45,8 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-      if (error.response && shouldDisplayError(error.response)) {
-        const data: ErrorData = error.response.data as ErrorData;
-        if (data){
-          toast.warn(data.message);
-        }
+      if (error.response && shouldDisplayError(error.response) && isApiError(error.response.data)) {
+        toast.warn(error.message);
       }
       throw error;
     }

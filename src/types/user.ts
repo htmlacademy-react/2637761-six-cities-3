@@ -1,10 +1,7 @@
-interface IUser {
+export interface IUser {
   name: string;
   avatarUrl: string;
   isPro: boolean;
-}
-
-export interface IHostUser extends IUser {
 }
 
 export type Token = string;

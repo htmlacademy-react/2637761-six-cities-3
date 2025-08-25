@@ -1,6 +1,6 @@
 import { City } from './city';
 import { IReview, Location } from './types';
-import { IHostUser } from './user';
+import { IUser } from './user';
 
 export interface IPlace {
   id: string;
@@ -19,7 +19,7 @@ export interface IOffer extends IPlace {
   description: string;
   bedrooms: number;
   goods: string[];
-  host: IHostUser;
+  host: IUser;
   images: string[];
   maxAdults: number;
 }

@@ -27,9 +27,11 @@ export const fetchOfferViewAction = createAsyncThunk<OfferView, string, {
 }>(
   'fetchOfferById',
   async (id, { extra: api }) => {
-    const { data: offer } = await api.get<IOffer>(`${APIRoute.Offers}/${id}`);
-    const { data: nearby } = await api.get<IPlace[]>(`${APIRoute.Offers}/${id}/nearby`);
-    const { data: reviews } = await api.get<IReview[]>(`${APIRoute.Comments}/${id}`);
+    const [{data: offer}, {data: nearby}, {data: reviews}] = await Promise.all([
+      api.get<IOffer>(`${APIRoute.Offers}/${id}`),
+      api.get<IPlace[]>(`${APIRoute.Offers}/${id}/nearby`),
+      api.get<IReview[]>(`${APIRoute.Comments}/${id}`)
+    ]);
 
     const result: OfferView = {
       offer: offer,

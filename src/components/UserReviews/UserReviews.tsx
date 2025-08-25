@@ -89,10 +89,6 @@ const UserReviews = () => {
 
   const handleClickSubmit = (e: FormEvent) => {
     e.preventDefault();
-    /*const date = (new Date()).toString();
-    const review = {...newReview, id: date, date: date };*/
-
-    //setReviews([...reviews, review]);
     setNewReview(getDefaultReview());
   };
 

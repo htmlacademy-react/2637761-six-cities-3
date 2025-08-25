@@ -1,6 +1,6 @@
 import { City } from './city';
 import { IPlace } from './place';
-import { IHostUser } from './user';
+import { IUser } from './user';
 
 export type Location = {
   latitude: number;
@@ -11,7 +11,7 @@ export type Location = {
 export interface IReview {
   id: string;
   date: string;
-  user: IHostUser;
+  user: IUser;
   comment: string;
   rating: number;
 }

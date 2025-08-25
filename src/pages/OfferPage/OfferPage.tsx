@@ -148,7 +148,7 @@ const OfferPage = () => {
                   </p>
                 </div>
               </div>
-              <UserReviews></UserReviews>
+              <UserReviews/>
             </div>
           </div>
           <PlaceMap viewType={MapViewType.Offer} city={city} places={nearPlaces} selectedPlace={activeCard?.id ?? 'unknown'}/>

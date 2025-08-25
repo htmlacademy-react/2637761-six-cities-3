@@ -4,19 +4,17 @@ import {fetchOffersAction, fetchOfferViewAction, fetchFavoritesAction} from '../
 import {cityData, getCityByName, getDefaultCity} from '../../store/CityData/CityData';
 import {SliceSpace} from '../../types/types';
 import { SortType } from '../../const';
+import { CONFIG } from '../../config/appConfig';
 
 const getCity = (cityName: string) => getCityByName(cityName) ?? getDefaultCity();
 
-const defaultCityName = 'Amsterdam';
-const defaultCity = getCity(defaultCityName);
-
 const initialState: OffersState = {
   cities: cityData,
-  city: defaultCity,
+  city: getCity(CONFIG.defaultCity),
   allPlaces: [],
   cityPlaces: [],
   cityPlacesCount: 0,
-  sortType: 'Popular',
+  sortType: CONFIG.defaultSortType,
   offerView: {
     offer: undefined,
     nearPlaces: [],
