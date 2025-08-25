@@ -4,11 +4,11 @@ import Cities from '../../components/Cities/Cities';
 import CityPlaces from '../../components/CityPlaces/CityPlaces';
 
 import { useAppSelector } from '../../hooks';
-import { selectCityPlacesCount } from '../../store/selectors';
+import { getCityPlacesCount } from '../../store/offers/selectors';
 
 const MainPage = () => {
 
-  const cityOffersEmpty = useAppSelector(selectCityPlacesCount) === 0;
+  const cityOffersEmpty = useAppSelector(getCityPlacesCount) === 0;
 
   const mainPageClass = classNames(
     'page__main',

@@ -1,4 +1,5 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { AppRoute } from '../../const';
 
 import MainPage from '../../pages/MainPage/MainPage';
@@ -23,6 +24,7 @@ const App = () => (
       <Route path={AppRoute.Offer} element={<OfferPage/>} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+    <ToastContainer />
   </BrowserRouter>
 );
 

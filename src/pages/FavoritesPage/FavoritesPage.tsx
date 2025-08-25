@@ -2,11 +2,13 @@ import classNames from 'classnames';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
-import {City, IPlace, PlaceViewType} from '../../types/types';
-import {cityData} from '../../store/CityData/CityData';
+import {PlaceViewType} from '../../types/place';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
+import { City } from '../../types/city';
+import { IPlace } from '../../types/place';
 
-import {getPlaces} from '../../mocks/Offers';
+import { useAppSelector } from '../../hooks';
+import { getAllCities, getFavorites } from '../../store/offers/selectors';
 
 type FavoriteCityPlaces = {
   city: City;
@@ -46,10 +48,12 @@ const existingFavorites = (favorites: FavoriteCityPlaces[]) => (
 );
 
 const FavoritesPage = () => {
+  const cityData = useAppSelector(getAllCities);
+  const favoritePlaces = useAppSelector(getFavorites);
 
   const favorites: FavoriteCityPlaces[] = cityData
     .map((city) => {
-      const matchingItem = getPlaces(city.name).filter((place) => place.isFavorite);
+      const matchingItem = favoritePlaces.filter((place) => place.city.name === city.name);
       return matchingItem.length > 0 ? { city: city, places: matchingItem } : null;
     })
     .filter((item): item is FavoriteCityPlaces => item !== null);

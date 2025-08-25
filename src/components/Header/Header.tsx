@@ -3,14 +3,14 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import {User} from '../../mocks/User';
 
 import { useAppSelector } from '../../hooks';
-import { selectAuthStatus } from '../../store/selectors';
+import { getAuthStatus } from '../../store/user/selectors';
 
 const Header = () => {
   let email = '';
   let favoriteCount = 0;
   let avatarUrl = '';
 
-  const authStatus = useAppSelector(selectAuthStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   const userLogged = authStatus === AuthorizationStatus.Auth;
 
   if (userLogged){

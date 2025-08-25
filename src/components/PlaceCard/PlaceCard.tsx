@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {AppRoute} from '../../const';
-import {PlaceCardProps, PlaceViewType} from '../../types/types.ts';
+import {PlaceCardProps, PlaceViewType} from '../../types/place';
 
 import '../../styles/main.css';
 

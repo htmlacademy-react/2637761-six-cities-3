@@ -2,15 +2,15 @@ import { type MouseEvent } from 'react';
 import classNames from 'classnames';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectCities, selectCity } from '../../store/selectors';
-import { setCity } from '../../store/actions';
+import { getAllCities, getCity } from '../../store/offers/selectors';
+import { setCity } from '../../store/offers/offers';
 
 const Cities = () => {
 
   const dispatch = useAppDispatch();
 
-  const cities = useAppSelector(selectCities);
-  const city = useAppSelector(selectCity);
+  const cities = useAppSelector(getAllCities);
+  const city = useAppSelector(getCity);
 
   const handleCityClick = (event: MouseEvent<HTMLElement>) => {
     const element = event.target as HTMLElement;
