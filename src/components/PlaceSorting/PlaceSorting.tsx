@@ -8,18 +8,17 @@ import { setSortType } from '../../store/offers/offers';
 const PlaceSorting = () => {
   const dispatch = useAppDispatch();
 
-  const [isFiltersHovered, setIsFiltersHovered] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
   const sortType = useAppSelector(getSortType);
 
-  const handleMouseEnter = useCallback(() => setIsFiltersHovered(true), []);
-  const handleMouseLeave = useCallback(() => setIsFiltersHovered(false), []);
+  const handleSortingTypeClick = useCallback(() => setIsOpened((prevState) => !prevState), []);
 
   const handleSortTypeClick = useCallback((event: MouseEvent<HTMLElement>) => {
     const element = event.target as HTMLElement;
     const content = element.textContent ?? '';
     if (isSortType(content)) {
       dispatch(setSortType(content));
-      setIsFiltersHovered(false);
+      setIsOpened(false);
     }
   }, [dispatch]);
 
@@ -27,9 +26,9 @@ const PlaceSorting = () => {
     'places__options',
     'places__options--custom',
     {
-      'places__options--opened': isFiltersHovered
+      'places__options--opened': isOpened
     }
-  ), [isFiltersHovered]);
+  ), [isOpened]);
 
   const sortList = useMemo(() => SORT_TYPES.map((item, index) => {
     const selected = item === sortType;
@@ -61,13 +60,13 @@ const PlaceSorting = () => {
   return (
     <form
       className="places__sorting"
-      action="#"
-      method="get"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <span className="places__sorting-caption">Sort by&nbsp;</span>
-      <span className="places__sorting-type" tabIndex={0}>
+      <span
+        className="places__sorting-type"
+        tabIndex={0}
+        onClick={handleSortingTypeClick}
+      >
         {sortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>

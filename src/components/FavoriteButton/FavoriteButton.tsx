@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import '../../styles/main.css';
@@ -10,16 +11,18 @@ import { changeFavoriteAction } from '../../store/apiActions';
 import { FavoriteStatus } from '../../types/place';
 import { FavoriteButtonViewType } from '../../types/types';
 import { State } from '../../types/store';
-import { ICON_SIZES } from '../../const';
+import { AppRoute, ICON_SIZES } from '../../const';
 
 type FavoriteButtonProps = {
   placeId: string;
   viewType: FavoriteButtonViewType;
+  redirectNavigation?: string;
 }
 
-const FavoriteButton = ({ placeId, viewType }: FavoriteButtonProps) => {
+const FavoriteButton = ({ placeId, viewType, redirectNavigation }: FavoriteButtonProps) => {
   const userLogged = useAppSelector(getUserLogged);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,15 +33,19 @@ const FavoriteButton = ({ placeId, viewType }: FavoriteButtonProps) => {
   const isFavorite = useSelector(selectIsFavorite);
 
   const handleChangeFavorite = useCallback(() => {
-    setIsLoading(true);
+    if (!userLogged){
+      navigate(AppRoute.Login, { state: { from: redirectNavigation } });
+    } else {
+      setIsLoading(true);
 
-    dispatch(changeFavoriteAction({
-      placeId: placeId,
-      status: isFavorite ? FavoriteStatus.Removed : FavoriteStatus.Added
-    })).then(() => {
-      setIsLoading(false);
-    });
-  }, [dispatch, placeId, isFavorite]);
+      dispatch(changeFavoriteAction({
+        placeId: placeId,
+        status: isFavorite ? FavoriteStatus.Removed : FavoriteStatus.Added
+      })).then(() => {
+        setIsLoading(false);
+      });
+    }
+  }, [dispatch, navigate, placeId, isFavorite, userLogged, redirectNavigation]);
 
   const { bookmarkClassName: bookmarkClass, iconClassName: iconClass, width: iconWidth, height: iconHeight, buttonLabelText: buttonLabel } = useMemo(() => {
     const bookmarkClassName = classNames(
@@ -59,10 +66,6 @@ const FavoriteButton = ({ placeId, viewType }: FavoriteButtonProps) => {
       buttonLabelText
     };
   }, [viewType, isFavorite]);
-
-  if (!userLogged){
-    return null;
-  }
 
   return (
     <button

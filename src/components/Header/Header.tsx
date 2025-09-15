@@ -42,7 +42,10 @@ const Header = () => {
             <ul className="header__nav-list">
               <li className="header__nav-item user">
                 {userLogged ? (
-                  <a className="header__nav-link header__nav-link--profile">
+                  <a
+                    className="header__nav-link header__nav-link--profile"
+                    onClick={handleNavigateToFavorites}
+                  >
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                       <ImageWithFallback
                         className="header__avatar-wrapper user__avatar"
@@ -54,12 +57,7 @@ const Header = () => {
                       />
                     </div>
                     <span className="header__user-name user__name">{email}</span>
-                    <span
-                      className="header__favorite-count"
-                      onClick={handleNavigateToFavorites}
-                    >
-                      {favoriteCount}
-                    </span>
+                    <span className="header__favorite-count">{favoriteCount}</span>
                   </a>)
                   : (
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>

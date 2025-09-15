@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { OffersState } from '../../types/store';
-import { fetchOffersAction, fetchOfferViewAction, fetchFavoritesAction, fetchCommentsAction } from '../../store/apiActions';
+import { fetchOffersAction, fetchOfferViewAction, fetchFavoritesAction, fetchCommentsAction, addCommentAction } from '../../store/apiActions';
 import { cityData, getCityByName, getDefaultCity } from '../../store/CityData/CityData';
 import { SliceSpace } from '../../types/types';
 import { SortType } from '../../const';
@@ -24,6 +24,7 @@ const initialState: OffersState = {
   favorites: [],
   dataLoading: false,
   hasError: false,
+  addReviewError: false
 };
 
 export const offers = createSlice({
@@ -74,10 +75,16 @@ export const offers = createSlice({
         state.hasError = false;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
-        state.offerView.reviews = action.payload;
+        state.offerView.reviews = action.payload.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
       })
       .addCase(fetchCommentsAction.rejected, (state) => {
         state.hasError = true;
+      })
+      .addCase(addCommentAction.fulfilled, (state) => {
+        state.addReviewError = false;
+      })
+      .addCase(addCommentAction.rejected, (state) => {
+        state.addReviewError = true;
       })
       .addCase(fetchFavoritesAction.pending, (state) => {
         state.dataLoading = true;

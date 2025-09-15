@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, type ChangeEvent, type FormEvent } from 'react';
 import { CommentData } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getOfferId } from '../../store/offers/selectors';
-import { addCommentAction, fetchCommentsAction } from '../../store/apiActions';
+import { getAddReviewHasError, getOfferId } from '../../store/offers/selectors';
+import { addCommentAction } from '../../store/apiActions';
 import RatingStars from '../RatingStars';
 import { getUserLogged } from '../../store/user/selectors';
 
@@ -11,14 +11,17 @@ const ReviewForm = () => {
 
   const userLogged = useAppSelector(getUserLogged);
   const offerId = useAppSelector(getOfferId);
+  const hasError = useAppSelector(getAddReviewHasError);
 
   const [newComment, setNewComment] = useState('');
   const [newRating, setNewRating] = useState(0);
   const [isValidReview, setIsValidReview] = useState(false);
 
+  const validateForm = useCallback(() => setIsValidReview(newRating > 0 && (newComment.length >= 50 && newComment.length < 300)), [newRating, newComment]);
+
   useEffect(() => {
-    setIsValidReview(newRating > 0 && newComment.length >= 50);
-  }, [newRating, newComment]);
+    validateForm();
+  }, [validateForm]);
 
   const handleRatingChange = useCallback((rating: number) => {
     setNewRating(rating);
@@ -42,14 +45,19 @@ const ReviewForm = () => {
 
       setIsValidReview(false);
 
-      dispatch(addCommentAction(commentData));
-      dispatch(fetchCommentsAction(offerId));
+      dispatch(addCommentAction(commentData)).then(() => {
+        validateForm();
+      });
     }
-
-    // Сброс формы
-    setNewComment('');
-    setNewRating(0);
   };
+
+  useEffect(() => {
+    if (!hasError) {
+      // Сброс формы
+      setNewComment('');
+      setNewRating(0);
+    }
+  }, [hasError]);
 
   if (!userLogged){
     return null;

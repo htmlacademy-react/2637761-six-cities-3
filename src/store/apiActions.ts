@@ -2,7 +2,7 @@ import { redirectToRoute } from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute } from '../const';
 import { IOffer, IPlace, OfferView } from '../types/place';
-import { AuthData, ISiteUser } from '../types/user';
+import { AuthData, ISiteUser, ValidateUser } from '../types/user';
 import { ChangeFavoriteData, ChangeFavoriteResult, CommentData, IReview } from '../types/types';
 import { createAppAsyncThunk } from '../hooks';
 
@@ -52,14 +52,6 @@ export const changeFavoriteAction = createAppAsyncThunk<ChangeFavoriteResult, Ch
   }
 );
 
-
-export const addCommentAction = createAppAsyncThunk<void, CommentData>(
-  'addComment',
-  async ({ comment, placeId: id }, { extra: api }) => {
-    await api.post(`${APIRoute.Comments}/${id}`, comment);
-  }
-);
-
 export const fetchCommentsAction = createAppAsyncThunk<IReview[], string>(
   'fetchComments',
   async (id, { extra: api }) => {
@@ -68,6 +60,13 @@ export const fetchCommentsAction = createAppAsyncThunk<IReview[], string>(
   }
 );
 
+export const addCommentAction = createAppAsyncThunk<void, CommentData>(
+  'addComment',
+  async ({ comment, placeId: id }, { dispatch, extra: api }) => {
+    await api.post(`${APIRoute.Comments}sss/sss${id}`, comment);
+    dispatch(fetchCommentsAction(id));
+  }
+);
 
 export const checkAuthAction = createAppAsyncThunk<ISiteUser, undefined>(
   'checkAuth',
@@ -83,6 +82,12 @@ export const loginAction = createAppAsyncThunk<ISiteUser, AuthData>(
   'login',
   async ({login: email, password}, { dispatch, extra: api }) => {
     const { data } = await api.post<ISiteUser>(APIRoute.Login, {email, password});
+
+    const isValidUser = ValidateUser(data);
+    if (!isValidUser){
+      throw new Error('Ошибка при получении пользователя');
+    }
+
     saveToken(data.token);
     dispatch(redirectToRoute(AppRoute.Main));
     dispatch(fetchFavoritesAction());

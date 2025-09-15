@@ -58,7 +58,7 @@ const PlaceMap = ({ viewType, city, places }: MapProps) => {
     if (markersRef.current.size > 0) {
       markersRef.current.forEach((item, placeId) => item.setIcon(placeId === activePlaceId ? activeIcon : defaultIcon));
     }
-  }, [activePlaceId]);
+  }, [activePlaceId, places]);
 
   return (
     <section

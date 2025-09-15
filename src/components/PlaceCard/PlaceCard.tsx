@@ -19,12 +19,16 @@ const PlaceCard = ({ viewType, place }: PlaceCardProps) => {
   const linkRoute = AppRoute.Offer.replace(':id', id.toString());
 
   const handleMouseEnter = useCallback(() => {
-    dispatch(setActivePlaceId(id));
-  }, [dispatch, id]);
+    if (viewType === PlaceViewType.Cities) {
+      dispatch(setActivePlaceId(id));
+    }
+  }, [dispatch, id, viewType]);
 
   const handleMouseLeave = useCallback(() => {
-    dispatch(setActivePlaceId());
-  }, [dispatch]);
+    if (viewType === PlaceViewType.Cities) {
+      dispatch(setActivePlaceId());
+    }
+  }, [dispatch, viewType]);
 
   const favoritesClass = useMemo(() => classNames(
     'place-card__info',

@@ -17,6 +17,7 @@ export type OffersState = {
   favorites: IPlace[];
   dataLoading: boolean;
   hasError: boolean;
+  addReviewError: boolean;
 };
 
 export type FavoritesState = {

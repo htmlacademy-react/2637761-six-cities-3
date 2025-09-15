@@ -58,7 +58,7 @@ export const getSortType = createSelector(
 
 export const offerPageSelector = createSelector(
   selectOffersState,
-  (offersState) => ({ currentOffer: offersState.offerView.offer, nearPlaces: offersState.offerView.nearPlaces })
+  (offersState) => ({ currentOffer: offersState.offerView.offer, nearPlaces: offersState.offerView.nearPlaces.slice(0, 3) })
 );
 
 export const getOfferId = createSelector(
@@ -68,6 +68,11 @@ export const getOfferId = createSelector(
 
 export const getOfferReviews = createSelector(
   selectOfferView,
-  (offerView): IReview[] => offerView.reviews
+  (offerView): IReview[] => offerView.reviews.slice(0, 10)
+);
+
+export const getAddReviewHasError = createSelector(
+  selectOffersState,
+  (offersState): boolean => offersState.addReviewError
 );
 

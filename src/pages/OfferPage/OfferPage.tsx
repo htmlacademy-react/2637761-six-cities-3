@@ -16,6 +16,8 @@ import PlaceMap from '../../components/PlaceMap';
 import FavoriteButton from '../../components/FavoriteButton';
 import Loader from '../../components/Loader';
 import ImageWithFallback from '../../components/ImageWithFallback';
+import { AppRoute } from '../../const';
+import { setActivePlaceId } from '../../store/offers/offers';
 
 
 type OfferRouteParams = {
@@ -33,6 +35,7 @@ const OfferPage = () => {
 
   useEffect(() => {
     dispatch(fetchOfferViewAction(placeId)).then(() => {
+      dispatch(setActivePlaceId(placeId));
       setIsLoading(false);
     });
   }, [dispatch, placeId]);
@@ -51,6 +54,12 @@ const OfferPage = () => {
 
   const starClassName = classNames(`raiting-${Math.round(rating)}-star`);
 
+  const bedroomsText = `${bedrooms} Bedroom${bedrooms !== 1 ? 's' : ''}`;
+  const adultsText = `Max ${maxAdults} adult${maxAdults !== 1 ? 's' : ''}`;
+  const redirectNavigation = AppRoute.Offer.replace(':id', placeId);
+  const mapNearPlaces = [...nearPlaces];
+  mapNearPlaces.push(currentOffer);
+
   return (
     <div className="page">
       <Header />
@@ -59,7 +68,7 @@ const OfferPage = () => {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {images.map((url) => (
+              {images.slice(0, 6).map((url) => (
                 <div key={url} className="offer__image-wrapper">
                   <ImageWithFallback
                     className="offer__image"
@@ -81,7 +90,11 @@ const OfferPage = () => {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <FavoriteButton placeId={placeId} viewType={FavoriteButtonViewType.Offer}/>
+                <FavoriteButton
+                  placeId={placeId}
+                  viewType={FavoriteButtonViewType.Offer}
+                  redirectNavigation={redirectNavigation}
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -95,10 +108,10 @@ const OfferPage = () => {
                   {type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {bedrooms} Bedrooms
+                  {bedroomsText}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {maxAdults} adults
+                  {adultsText}
                 </li>
               </ul>
               <div className="offer__price">
@@ -147,7 +160,7 @@ const OfferPage = () => {
               <UserReviews/>
             </div>
           </div>
-          <PlaceMap viewType={MapViewType.Offer} city={city} places={nearPlaces}/>
+          <PlaceMap viewType={MapViewType.Offer} city={city} places={mapNearPlaces}/>
         </section>
         <div className="container">
           <section className="near-places places">
